@@ -12,7 +12,7 @@ public:
             if(s[i] == '(') open++;
             
             if(s[i] == ')'){
-                if(open <= 0){
+                if(open == 0){
                     close++;
                 }else{
                     open--;
