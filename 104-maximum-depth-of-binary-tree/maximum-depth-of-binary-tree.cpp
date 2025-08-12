@@ -12,21 +12,36 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if(!root) return 0;
-        int d =  solve(root);
-        return d;
+        
+        int depth = BFS(root);
+        return depth;
     }
 
-    int solve(TreeNode* node){
-        if(!node) return 0;
-        if(node->left ==NULL && node->right == NULL){
-            return 1;
+    int BFS(TreeNode* root){
+        if(!root) return 0;
+
+        deque<TreeNode*> q;
+        q.push_back(root);
+        int level = 0;
+
+        while(!q.empty()){
+            int size = q.size();
+
+            while(size > 0){
+                    TreeNode* cur = q.front();
+                    q.pop_front();
+                    size--;
+                    if(cur->left){
+                        q.push_back(cur->left);
+                    }
+                    if(cur->right){
+                        q.push_back(cur->right);
+                    }
+            }
+
+            if(!q.empty()) level++;
+         
         }
-
-        int left = solve(node->left);
-        int right = solve(node->right);
-
-        return(max(left, right) + 1);
-
+        return level + 1;
     }
 };
