@@ -10,24 +10,25 @@ public:
         return ans;
     }
 
-    void solve(vector<int>& candidates, int target, vector<int> &arr, int sum,
+    void solve(vector<int>& candidates, int target, vector<int> arr, int sum,
                int i, vector<vector<int>> &ans) {
 
-    if(i == candidates.size()){
+   
         if (sum == target) {
             ans.push_back(arr);
+             return;
         }
-         return;
-    }
-        // if (i == candidates.size() || sum > target) {
-        //     return;
-        // }
+        
+    
+        if (i == candidates.size() || sum > target) {
+            return;
+        }
 
         // pick
         if (sum + candidates[i] <= target) {
             arr.push_back(candidates[i]);
             solve(candidates, target, arr, sum + candidates[i], i, ans);
-            arr.pop_back();
+            arr.pop_back(); 
         }
         
         // not pick and backtrack
