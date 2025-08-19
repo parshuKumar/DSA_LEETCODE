@@ -22,23 +22,31 @@ class Solution {
 public:
     int maxDepth(Node* root) {
         
+        if(root == NULL) return 0;
 
-       if(root == NULL) return 0;
-       int ans = solve(root);
-       return ans + 1;
-    }
+        deque<Node*> q;
+        q.push_back(root);
+        int depth = 0;
+        while(!q.empty()){
+            
+            int siz = q.size();
+           
+            for(int i = 0; i < siz; ++i){
+                
+               Node *temp = q.front();
+               q.pop_front();
 
-    int solve(Node* root){
-        
-        if(root == NULL){
-            return 0;
+               if(temp == NULL) continue;
+
+               int arrSize = temp->children.size();
+               for(int j = 0; j < arrSize; ++j){
+                    if(temp->children[j])
+                        q.push_back(temp->children[j]);
+               }
+            
+            }
+            depth++;
         }
-
-        vector<int> arr((root->children).size());
-        for(int i = 0; i < root->children.size(); ++i){
-            arr[i] = solve(root->children[i]);
-        }
-        if(arr.empty()) return 0;
-        return 1 + (*max_element(arr.begin(), arr.end()));
+        return depth;
     }
 };
