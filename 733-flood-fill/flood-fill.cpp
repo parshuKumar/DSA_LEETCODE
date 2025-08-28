@@ -3,7 +3,7 @@ public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
         
         int in = image[sr][sc];
-        if(in == color) return image;
+        // if(in == color) return image;
         dfs(image, sr, sc, color, in);
         return image;
 
@@ -15,7 +15,7 @@ public:
             return;
         }
 
-        if(image[sr][sc] != in){
+        if(image[sr][sc] != in || image[sr][sc] == color){
             return;
         }
 
