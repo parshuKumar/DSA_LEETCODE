@@ -11,7 +11,8 @@ public:
             for(int j = 0; j < n; ++j){
                 if(v[i][j] == false && grid[i][j] != '0'){
                     cnt++;
-                    dfs(i , j, grid,v);
+                    // dfs(i , j, grid,v);
+                    bfs(i, j, grid, v);
                 }
                 
             }
@@ -34,5 +35,36 @@ public:
         dfs(row, col + 1, grid,v);
         dfs(row, col-1, grid,v);
 
+    }
+
+    void bfs(int row, int col, vector<vector<char>>& grid , vector<vector<bool>> &v){
+        queue<pair<int, int>> q;
+        q.push({row, col});
+        v[row][col] = true;
+       
+       while(!q.empty()){
+            int r = q.front().first;
+            int c = q.front().second;
+            q.pop();
+
+            if(r+1 < m && v[r+1][c] == false && grid[r+1][c] != '0'){
+                q.push({r+1, c});
+                v[r+1][c] = true;
+            }
+            if(r-1 >= 0 && v[r-1][c] == false && grid[r-1][c] != '0'){
+                q.push({r-1, c});
+                v[r-1][c] = true;
+            }
+            if(c+1 < n && v[r][c+1] == false && grid[r][c+1] != '0'){
+                q.push({r, c+1});
+                v[r][c+1] = true;
+            }
+            if(c-1 >= 0 && v[r][c-1] == false && grid[r][c-1] != '0'){
+                q.push({r, c-1});
+                v[r][c-1] = true;
+            }
+
+       }
+        
     }
 };
