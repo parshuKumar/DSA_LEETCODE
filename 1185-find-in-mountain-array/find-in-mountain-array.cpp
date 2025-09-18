@@ -14,21 +14,18 @@ public:
         int n = mountainArr.length();
         int start = 0;
         int end = n-1;
-        int peak = - 1;
+        
         while(start <= end){
-            int mid = start + ((end -start) /2);
-            if(mid!=0 && mid != n-1 && mountainArr.get(mid-1) < mountainArr.get(mid) && mountainArr.get(mid) > mountainArr.get(mid + 1)){
-                peak =  mid;
-                break;
-            }
-            else if (mid != n-1 && mountainArr.get(mid) < mountainArr.get(mid+1)){
+            int mid = start + (end - start) /2 ;
+
+            if(mountainArr.get(mid) < mountainArr.get(mid + 1)){
                 start = mid + 1;
-            }
-            else{
-                end = mid - 1;
-            }
+            } 
+            else end = mid -1;
 
         }
+
+        int peak = start;
 
         int a = bs(mountainArr, target, 0 , peak, true);
         int b =  bs(mountainArr, target, peak + 1, n-1 , false );
