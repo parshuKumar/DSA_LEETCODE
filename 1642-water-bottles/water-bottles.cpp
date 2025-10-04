@@ -4,10 +4,11 @@ public:
         int ans = 0;
 
         while(numBottles >= numExchange){
-            ans += numExchange;
-            numBottles -= numExchange;
+            int k = numBottles / numExchange;
+            ans += numExchange * k;
+            numBottles -= numExchange * k;
 
-            numBottles++;
+            numBottles += k;
         }
 
         return ans + numBottles;
