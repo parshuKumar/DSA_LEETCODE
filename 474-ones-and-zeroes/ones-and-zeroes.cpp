@@ -3,7 +3,7 @@ public:
     int findMaxForm(vector<string>& strs, int m, int n) {
         int stsize = strs.size();
         vector<pair<int, int>> count;
-        vector<vector<vector<int>>> dp(stsize + 1, vector<vector<int>>(m + 1, vector<int> (n + 1, -1)));
+        vector<vector<vector<int>>> dp(stsize + 1, vector<vector<int>>(m + 1, vector<int> (n + 1, 0)));
         for(int i = 0; i < strs.size(); ++i){
             int cnt0 = 0, cnt1 = 0;
             for(int j = 0; j < strs[i].size(); ++j){
@@ -12,8 +12,23 @@ public:
             }
             count.push_back({cnt0, cnt1});
         }
+        
+        for(int ind = stsize -1; ind >= 0; --ind){
+            for(int zeroes = 0; zeroes <= m; ++zeroes){
+                for(int ones = 0; ones <= n; ++ones){
+                    int take = 0;
 
-        return solve(0, strs, m, n, count, dp);
+                    if(zeroes - count[ind].first >= 0 && ones - count[ind].second >= 0){
+                        take = 1 + dp[ind + 1][zeroes - count[ind].first][ones - count[ind].second];
+                    }
+                    
+                    int notake = dp[ind + 1][zeroes][ones];
+
+                    dp[ind][zeroes][ones] = max(take, notake);
+                }
+            }
+        }
+        return dp[0][m][n];
     }
 
     int solve(int ind, vector<string> &strs, int m, int n, vector<pair<int, int>> &count, vector<vector<vector<int>>> &dp){
