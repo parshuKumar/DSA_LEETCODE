@@ -10,7 +10,7 @@ public:
         
     }
 
-    void solve(vector<vector<int>>& graph, int ind, vector<vector<int>> &res, vector<int> &help){
+    void solve(vector<vector<int>>& graph, int ind, vector<vector<int>> &res, vector<int> help){
 
         if(ind == graph.size()-1){
             res.push_back(help);
