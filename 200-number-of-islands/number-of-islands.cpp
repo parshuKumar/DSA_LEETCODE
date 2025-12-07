@@ -1,52 +1,36 @@
 class Solution {
 public:
+    int n;
+    int m;
     int numIslands(vector<vector<char>>& grid) {
-        
-        int m = grid.size();
-        int n = grid[0].size();
-        int cnt = 0;
-        vector<vector<bool>> vis(m, vector<bool>(n, true));
-        for(int i = 0; i < m; ++i){ 
-            for(int j = 0; j < n; ++j){
-                if(grid[i][j] == '1' && vis[i][j] == true){
-                    cnt++;
-                    bfs(i, j, grid,vis);
-                }
-            }
-        }
-        return cnt;    
-    }
-    void bfs(int row, int col, vector<vector<char>>& grid, vector<vector<bool>> &vis){
-        int n = grid.size();
-        int m = grid[0].size();
-        queue<pair<int, int>> q;
-        q.push({row, col});
-        vis[row][col] = false;
-        while(!q.empty()){
-            int r = q.front().first;
-            int c = q.front().second;
-            q.pop();
-            //down checking
-            if(r+1 < n && vis[r+1][c] == true && grid[r+1][c] == '1' ){
-                q.push({r+1, c});
-                vis[r+1][c] = false;
-            }
-            //right checking
-            if(c+1 < m && vis[r][c+1] == true && grid[r][c+1] == '1' ){
-                q.push({r, c+1});
-                vis[r][c+1] = false;
-            }
-            //up checking
-             if(r-1 >= 0 && vis[r-1][c] == true && grid[r-1][c] == '1' ){
-                q.push({r-1, c});
-                vis[r-1][c] = false;
-            }
+         n = grid.size();
+         m = grid[0].size();
 
-            //left checking
-              if(c-1 >= 0 && vis[r][c-1] == true && grid[r][c-1] == '1' ){
-                q.push({r, c-1});
-                vis[r][c-1] = false;
+        vector<vector<bool>> visited(n, vector<bool>(m, false));
+        int cnt = 0;
+        for(int i = 0; i < n; ++i){
+            for(int j = 0; j < m; ++j){
+                if(visited[i][j] == true || grid[i][j] == '0') continue;
+                cnt++;
+                dfs(i, j, grid, visited);
             }
         }
+        return cnt;
+    }
+
+    void dfs(int row, int col, vector<vector<char>> &grid, vector<vector<bool>> &visited){
+        
+        if(row < 0 || col < 0 || row >= n || col >= m || grid[row][col] == '0' || visited[row][col] == true){
+            return;
+        }
+
+        visited[row][col] = true;
+        int dr[] = {1, -1, 0, 0};
+        int dc[] = {0, 0, 1, -1};
+
+        for(int k = 0; k < 4; ++k){
+            dfs(row + dr[k], col + dc[k], grid, visited);
+        }
+
     }
 };
