@@ -1,27 +1,46 @@
 class Solution {
 public:
     int longestBalanced(string s) {
+
         int n = s.size();
-        int maxL = 0;
-        for(int i = 0; i < n; ++i){
-            vector<int> mp(26, 0);
-            for(int j = i; j < n; ++j){
-                mp[s[j] - 'a']++;
-                int curCnt = mp[s[j] - 'a'];
+        int len = 1;
+
+        for (int i = 0; i < n; ++i) {
+             map<char, int> mp;
+             
+            for (int j = i; j < n; ++j) {
                 bool check = true;
-                for(int k = 0; k < 26; ++k){
-                    if(mp[k] == 0) continue;
-                    if(mp[k] != curCnt){
+                mp[s[j]]++;
+                int num = mp.begin()->second;
+                for(auto it = mp.begin(); it!= mp.end(); ++it){
+                    if(it->second != num){
                         check = false;
                         break;
                     }
                 }
                 if(check){
-                    maxL = max(maxL, j - i + 1);
+                    len = max(len, j - i + 1);
                 }
-                
             }
         }
-        return maxL;
+        return len;
     }
+
+    // bool checkValid(string& str) {
+    //     unordered_map<char, int> mp;
+    //     for (int i = 0; i < str.size(); ++i) {
+    //         mp[str[i]]++;
+    //     }
+    //     int num = mp.begin()->second;
+
+    //     if (mp.size() > 1) {
+    //         for (auto it = mp.begin(); it != mp.end(); ++it) {
+    //             if (num != it->second) {
+    //                 return false;
+    //             }
+    //         }
+    //     }
+
+    //     return true;
+    // }
 };
