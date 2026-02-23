@@ -2,7 +2,6 @@ class Solution {
 public:
     int binaryGap(int n) {
         int prev = -1;
-        int cur = 0;
         int longDist = 0;
 
         string num = convertToString(n);
